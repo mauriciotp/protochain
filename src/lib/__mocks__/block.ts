@@ -31,7 +31,7 @@ export default class Block {
    */
   isValid(previousHash: string, previousIndex: number): Validation {
     if (!previousHash || previousIndex < 0 || this.index < 0)
-      return new Validation(false, 'invalid mock block');
+      return new Validation(false, 'Invalid mock block');
     return new Validation();
   }
 }
