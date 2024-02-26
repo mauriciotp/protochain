@@ -4,6 +4,7 @@ import BlockInfo from '../blockInfo';
 import Transaction from './transaction';
 import TransactionType from '../transactionType';
 import TransactionSearch from '../transactionSearch';
+import TransactionInput from './transactionInput';
 /**
  * Mocked blockchain class
  */
@@ -24,7 +25,7 @@ export default class Blockchain {
         previousHash: '',
         transactions: [
           new Transaction({
-            data: 'tx1',
+            txInput: new TransactionInput(),
             type: TransactionType.FEE,
           } as Transaction),
         ],
@@ -80,7 +81,7 @@ export default class Blockchain {
     return {
       transactions: [
         new Transaction({
-          data: new Date().toString(),
+          txInput: new TransactionInput(),
         } as Transaction),
       ],
       difficulty: 0,
