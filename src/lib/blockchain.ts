@@ -50,7 +50,7 @@ export default class Blockchain {
       const from = transaction.txInput.fromAddress;
       const pendingTx = this.mempool
         .map((tx) => tx.txInput)
-        .filter((txi) => txi?.fromAddress === from);
+        .filter((txi) => txi!.fromAddress === from);
       if (pendingTx && pendingTx.length)
         return new Validation(false, 'This wallet has a pending transaction');
 
@@ -67,9 +67,6 @@ export default class Blockchain {
       )
     )
       return new Validation(false, 'Duplicated tx in blockchain.');
-
-    if (this.mempool.some((tx) => tx.hash === transaction.hash))
-      return new Validation(false, 'Duplicated tx in mempool.');
 
     this.mempool.push(transaction);
     return new Validation(true, transaction.hash);
