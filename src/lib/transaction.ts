@@ -33,12 +33,12 @@ export default class Transaction {
 
   getHash(): string {
     const from =
-      this.txInputs && this.txInputs
+      this.txInputs && this.txInputs.length
         ? this.txInputs.map((txi) => txi.signature).join(',')
         : '';
 
     const to =
-      this.txOutputs && this.txOutputs
+      this.txOutputs && this.txOutputs.length
         ? this.txOutputs.map((txo) => txo.getHash()).join(',')
         : '';
 
