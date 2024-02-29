@@ -73,7 +73,7 @@ describe('TransactionInput tests', () => {
       fromAddress: alice.publicKey,
     } as TransactionInput);
 
-    txInput.sign(bob.privateKey);
+    txInput.sign(alice.privateKey);
 
     const valid = txInput.isValid();
     expect(valid.success).toBeFalsy();
