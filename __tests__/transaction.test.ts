@@ -7,12 +7,15 @@ jest.mock('../src/lib/transactionInput');
 jest.mock('../src/lib/transactionOutput');
 
 describe('Transaction tests', () => {
+  const exampleDifficulty: number = 1;
+  const exampleFee: number = 1;
+
   test('Should be valid (REGULAR default)', () => {
     const tx = new Transaction({
       txInputs: [new TransactionInput()],
       txOutputs: [new TransactionOutput()],
     } as Transaction);
-    const valid = tx.isValid();
+    const valid = tx.isValid(exampleDifficulty, exampleFee);
     expect(valid.success).toBeTruthy();
   });
 
@@ -24,7 +27,7 @@ describe('Transaction tests', () => {
 
     tx.txOutputs[0].tx = 'olele';
 
-    const valid = tx.isValid();
+    const valid = tx.isValid(exampleDifficulty, exampleFee);
     expect(valid.success).toBeFalsy();
   });
 
@@ -37,7 +40,7 @@ describe('Transaction tests', () => {
       ],
       txOutputs: [new TransactionOutput({ amount: 2 } as TransactionOutput)],
     } as Transaction);
-    const valid = tx.isValid();
+    const valid = tx.isValid(exampleDifficulty, exampleFee);
     expect(valid.success).toBeFalsy();
   });
 
@@ -49,7 +52,7 @@ describe('Transaction tests', () => {
       timestamp: Date.now(),
       hash: 'abc',
     } as Transaction);
-    const valid = tx.isValid();
+    const valid = tx.isValid(exampleDifficulty, exampleFee);
     expect(valid.success).toBeFalsy();
   });
 
@@ -62,13 +65,13 @@ describe('Transaction tests', () => {
     tx.txInputs = undefined;
     tx.hash = tx.getHash();
 
-    const valid = tx.isValid();
+    const valid = tx.isValid(exampleDifficulty, exampleFee);
     expect(valid.success).toBeTruthy();
   });
 
   test('Should NOT be valid (invalid to)', () => {
     const tx = new Transaction();
-    const valid = tx.isValid();
+    const valid = tx.isValid(exampleDifficulty, exampleFee);
     expect(valid.success).toBeFalsy();
   });
 
@@ -83,7 +86,7 @@ describe('Transaction tests', () => {
         } as TransactionInput),
       ],
     } as Transaction);
-    const valid = tx.isValid();
+    const valid = tx.isValid(exampleDifficulty, exampleFee);
     expect(valid.success).toBeFalsy();
   });
 });

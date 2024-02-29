@@ -5,7 +5,6 @@ import axios from 'axios';
 import readline from 'readline';
 import Wallet from '../lib/wallet';
 import Transaction from '../lib/transaction';
-import TransactionType from '../lib/transactionType';
 import TransactionInput from '../lib/transactionInput';
 import TransactionOutput from '../lib/transactionOutput';
 
@@ -76,7 +75,7 @@ function createWallet() {
 
 function recoverWallet() {
   console.clear();
-  rl.question(`What is your private key or WIF?`, (wifOrPrivateKey) => {
+  rl.question(`What is your private key or WIF? `, (wifOrPrivateKey) => {
     const wallet = new Wallet(wifOrPrivateKey);
     console.log(`Your recovered wallet:`);
     console.log(wallet);

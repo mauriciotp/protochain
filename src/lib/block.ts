@@ -71,7 +71,8 @@ export default class Block {
   isValid(
     previousHash: string,
     previousIndex: number,
-    difficulty: number
+    difficulty: number,
+    feePerTx: number
   ): Validation {
     if (this.transactions && this.transactions.length) {
       const feeTxs = this.transactions.filter(
@@ -85,9 +86,14 @@ export default class Block {
       if (!feeTxs[0].txOutputs.some((txo) => txo.toAddress === this.miner))
         return new Validation(false, 'Invalid fee tx: different from miner');
 
-      // TODO: colocar validação de quantidade de taxas
+      const totalFees =
+        feePerTx *
+        this.transactions.filter((tx) => tx.type !== TransactionType.FEE)
+          .length;
 
-      const validations = this.transactions.map((tx) => tx.isValid());
+      const validations = this.transactions.map((tx) =>
+        tx.isValid(difficulty, totalFees)
+      );
       const errors = validations
         .filter((v) => !v.success)
         .map((v) => v.message);
