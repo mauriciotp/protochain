@@ -226,7 +226,7 @@ export default class Blockchain {
     const txIns = this.getTxInputs(wallet);
     const txOuts = this.getTxOutputs(wallet);
 
-    if (!txIns || txIns.length) return txOuts;
+    if (!txIns || !txIns.length) return txOuts;
 
     txIns.forEach((txi) => {
       const index = txOuts.findIndex((txo) => txo.amount === txi!.amount);
